@@ -88,14 +88,14 @@ class InfoPage extends VBox {
             a.setAlertType(Alert.AlertType.CONFIRMATION);
             a.setContentText("Do you want to save this information?");
             a.showAndWait();
+            
+            //Confirmation to save information
 			if (a.getResult().getText().equals("OK")) {
 				a.setAlertType(Alert.AlertType.INFORMATION);
 				a.setContentText("Information saved");
 				a.showAndWait();
 			
-			}
-			
-			else {
+			} else {
 				a.setAlertType(Alert.AlertType.WARNING);
 				a.setContentText("Information not saved");
 				a.showAndWait();

@@ -15,7 +15,7 @@ import javafx.scene.control.Alert;
 
 
 class PatientView extends VBox {
-	Button edit;
+	Button edit, logout;
 	VBox root;
 	Scanner scnr = new Scanner(System.in);
 	
@@ -37,8 +37,8 @@ class PatientView extends VBox {
         Label chat = new Label("Chat: ");
         TextField patientChat = new TextField();
         chatBox.setAlignment(Pos.CENTER);
-        chatBox.setTranslateY(75);
-        chatBox.setTranslateX(150);
+        chatBox.setTranslateY(500);
+        chatBox.setTranslateX(400);
         chatBox.getChildren().addAll(chat, patientChat);
 
 
@@ -47,19 +47,34 @@ class PatientView extends VBox {
         //View/Edit Info
         edit = new Button("View/Edit Info");
         edit.setPrefWidth(100);
-        edit.setTranslateY(50);
+        edit.setTranslateY(450);
         edit.setTranslateX(0);
+        edit.setPadding(new Insets(10, 10, 10, 10));
+        
         edit.setOnAction(e -> {
             this.getChildren().clear();
             this.getChildren().add(new InfoPage());
         });
-        edit.setPadding(new Insets(10, 10, 10, 10));
+        
+        
+        logout = new Button("Logout");
+        logout.setPrefWidth(100);
+        logout.setTranslateY(475);
+        logout.setTranslateX(0);
+        logout.setPadding(new Insets(10, 10, 10, 10));
+        
+		logout.setOnAction(e -> {
+			this.getChildren().clear();
+			this.getChildren().add(new PatientLogin());
+		});
+        
+        
         
         
         /**********************Engine**********************/
         //Instantiating the VBox
         this.setPadding(new Insets(10, 10, 10, 10));
-        this.getChildren().addAll(heading, chatBox, edit);
+        this.getChildren().addAll(heading, chatBox, edit, logout);
     }
    
 }
