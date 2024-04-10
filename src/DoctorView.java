@@ -22,7 +22,7 @@ class DoctorView extends VBox {
     
     	BorderPane DoctorPane = new BorderPane();  
 		Text DoctorTitle = new Text("Doctor's View");
-		DoctorTitle.setX(550);
+		DoctorTitle.setX(500);
 		DoctorTitle.setY(20);
 		
 		Text patientTitle = new Text("Patient:");
@@ -35,11 +35,11 @@ class DoctorView extends VBox {
 		
 		Text OngoingMedicationsTitle = new Text("Ongoing Medications:");
 		OngoingMedicationsTitle.setX(100);
-		OngoingMedicationsTitle.setY(440);
+		OngoingMedicationsTitle.setY(400);
 		
 		Text ImmunizationRecordsTitle = new Text("Immunization Records:");
 		ImmunizationRecordsTitle.setX(100);
-		ImmunizationRecordsTitle.setY(650);
+		ImmunizationRecordsTitle.setY(560);
 		
 		Text TestResultsTitle = new Text("Physical Test Results:");
 		TestResultsTitle.setX(600);
@@ -47,11 +47,11 @@ class DoctorView extends VBox {
 		
 		Text PrescriptionsTitle = new Text("Prescriptions:");
 		PrescriptionsTitle.setX(600);
-		PrescriptionsTitle.setY(440);
+		PrescriptionsTitle.setY(400);
 		
 		Text RecommendationsTitle = new Text("Recommendations:");
 		RecommendationsTitle.setX(600);
-		RecommendationsTitle.setY(650);
+		RecommendationsTitle.setY(560);
 		
 		TextField HealthIssuesTextField = new TextField();
 		TextField OngoingMedicationsTextField = new TextField();
@@ -64,8 +64,8 @@ class DoctorView extends VBox {
 		
 	    VBox.setMargin(HealthIssuesTextField, new Insets(250, 000, 20, 100)); 
 	    HealthIssuesTextField.setPrefWidth(400);
-	    VBox.setMargin(OngoingMedicationsTextField, new Insets(150, 000, 20, 100)); 
-	    VBox.setMargin(ImmunizationHistoryTextField, new Insets(150, 000, 20, 100)); 
+	    VBox.setMargin(OngoingMedicationsTextField, new Insets(100, 000, 20, 100)); 
+	    VBox.setMargin(ImmunizationHistoryTextField, new Insets(100, 000, 20, 100)); 
 	    
 	    
 		TextField TestResultsTextField = new TextField();
@@ -81,14 +81,14 @@ class DoctorView extends VBox {
 		
 	    VBox.setMargin(TestResultsTextField, new Insets(250, 100, 20, 100));
 	    TestResultsTextField.setPrefWidth(400);
-	    VBox.setMargin(PrescriptionsTextField, new Insets(150, 100, 20, 100)); 
-	    VBox.setMargin(RecommendationsTextField, new Insets(150, 100, 20, 100));
+	    VBox.setMargin(PrescriptionsTextField, new Insets(100, 100, 20, 100)); 
+	    VBox.setMargin(RecommendationsTextField, new Insets(100, 100, 20, 100));
 	    
 	    
 		Button sendButton = new Button("Send");
 		VBox sendButtonVBox = new VBox();
 		sendButtonVBox.getChildren().add(sendButton);
-		VBox.setMargin(sendButton, new Insets(465, 00, 00, 00));
+		VBox.setMargin(sendButton, new Insets(415, 00, 00, 00));
 		sendButton.setOnAction(e -> {
 			if (PrescriptionsTextField.getText().isEmpty()) {
 				Alert a = new Alert(AlertType.NONE);
