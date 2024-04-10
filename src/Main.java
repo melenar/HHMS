@@ -73,7 +73,7 @@ public class Main extends Application {
                 // If the source is cancel or confirm button
                 if (source == patient) {
                     root.getChildren().clear();
-                    root.getChildren().addAll(new PatientView());
+                    root.getChildren().addAll(new PatientLogin());
                 } else if (source == nurse) {
                     root.getChildren().clear();
                     root.getChildren().add(new NurseView());
