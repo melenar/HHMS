@@ -26,7 +26,7 @@ public class Admin {
 
     private String generateID(String dob, String firstname, String lastName) {
         String id = firstname.substring(0,3)+lastName.substring(0,3)+dob.substring(0,2);
-        return id;
+        return id.toLowerCase();
     }
 
     String newPatient(String firstname, String lastName, String gender, long phone, String dob) {
@@ -66,10 +66,34 @@ public class Admin {
         } catch (IOException e1) { e1.printStackTrace(); }
     }
 
-    public String loadHistory(String patientId) {
-        String path = "file/"+ patientId + "_PatientInfo.txt";
+    public String[] loadHistory(String patientId) {
+        String path = patientId + "_PatientInfo.txt";
+        List<String> historyList = new ArrayList<>();
 
-        return path;
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            String line;
+            StringBuilder visitData = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                // Start of a new visit
+                if (line.startsWith("Visit:")) {
+                    if (visitData.length() > 0) {
+                        historyList.add(visitData.toString()); // Add previous visit data to history list
+                        visitData = new StringBuilder(); // Reset visit data
+                    }
+                    visitData.append(line).append("\n"); // Add visit timestamp to visit data
+                } else {
+                    visitData.append(line).append("\n"); // Add other visit details to visit data
+                }
+            }
+
+            // Add the last visit data to the history list
+            if (visitData.length() > 0) {
+                historyList.add(visitData.toString());
+            }
+        } catch (IOException e1) { e1.printStackTrace(); }
+
+        return historyList.toArray(new String[0]);
     }
 
     void saveMessage(String message, String sender, String patientId) {

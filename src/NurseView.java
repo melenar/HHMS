@@ -30,6 +30,7 @@ class NurseView extends VBox {
         submitButton.setOnAction(e -> {
             if (!allergiesTextArea.getText().isEmpty() && !healthConcernsTextArea.getText().isEmpty()) {
                 save(allergiesTextArea.getText(), healthConcernsTextArea.getText());
+                
             }
         });
 
@@ -71,12 +72,21 @@ class NurseView extends VBox {
         VBox communicationBox = new VBox(5, new Label("Communication"), communicationListView, new HBox(messageTextField, sendButton));
         grid.add(communicationBox, 2, 0, 1, 3);
 
-        // TableView for displaying patient history
-        TableView<String> patientHistoryTableView = new TableView<>();
-        TableColumn<String, String> historyColumn = new TableColumn<>("Patient History");
-        patientHistoryTableView.getColumns().add(historyColumn);
+        // // TableView for displaying patient history
+        String history[] = system.loadHistory(patientID);
 
-        root.getChildren().addAll(grid, new Separator(), patientHistoryTableView);
+        
+        ListView<String> patientHistoryTableView = new ListView<>();
+        for (String visit : history) {
+            String[] lines = visit.split("\n");
+            for (String line : lines) {
+                patientHistoryTableView.getItems().add(line);
+            }
+        }
+
+        VBox pH = new VBox(5, new Label("Communication"), patientHistoryTableView);
+
+        root.getChildren().addAll(grid, new Separator(), pH);
     }
 
     public static void startUI(VBox root, String id) {
@@ -166,7 +176,7 @@ class NurseView extends VBox {
             FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
             
-            String text = "Vist: " + (new Date())
+            String text = "Visit: " + (new Date())
                         + "\nWeight: " + weight
                         + "\nHeight: " + height
                         + "\nTemperature: " + temperature
@@ -195,7 +205,7 @@ class NurseView extends VBox {
             FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
             
-            String text = "\nAlergies:\n" + allergies + "\nHealth Concerns:\n" + healthConcerns;
+            String text = "Alergies:\n" + allergies + "\nHealth Concerns:\n" + healthConcerns;
 
             // Append text to file
             bw.write(text);

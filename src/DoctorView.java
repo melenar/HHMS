@@ -125,7 +125,7 @@ class DoctorView extends VBox {
             FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
             
-            String text = "\nNotes:\n" + findingsTextArea + "\nPrescription:\n" + prescriptionTextArea;
+            String text = "Notes:\n" + findingsTextArea + "\nPrescription:\n" + prescriptionTextArea;
 
             // Append text to file
             bw.write(text);
