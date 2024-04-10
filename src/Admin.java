@@ -45,7 +45,6 @@ public class Admin {
 
         saveToFile(patientId + "_PatientInfo.txt", firstname, lastName, gender, phone, age);
 
-
         return id;
     }
 
@@ -81,6 +80,6 @@ public class Admin {
     }
 
     void save() {
-
+        
     }
 }

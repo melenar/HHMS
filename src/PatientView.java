@@ -28,7 +28,7 @@ class PatientView extends VBox {
             System.out.println(view.authenticate(this, 2));
     }
     
-    public static void startUI(VBox root) {
+    public static void startUI(VBox root, int id) {
         Button edit, logout;
         Scanner scnr = new Scanner(System.in);
     	//Heading

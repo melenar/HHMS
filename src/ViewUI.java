@@ -67,9 +67,8 @@ class ViewUI{
 
                         //To swtich to the Nurse or Patient view after authentication
                         root.getChildren().clear();
-                        // startUI(root);
-                        if (viewChoice == 1) NurseView.startUI(root);
-                        else PatientView.startUI(root);
+                        if (viewChoice == 1) NurseView.startUI(root, Integer.parseInt(id));
+                        else PatientView.startUI(root, Integer.parseInt(id));
                         break;
                     // } else {
                     //     a = new Alert(Alert.AlertType.NONE);
@@ -92,14 +91,9 @@ class ViewUI{
         
         /**********************Engine**********************/                
         //Instantiating the VBox
-        // if (isLogged) {
-        //     root.getChildren().clear();
-        //     System.out.println("jfns");
-        // }
         root.setPadding(new Insets(10, 10, 10, 10));
         root.getChildren().addAll(heading, login, accountCreate, authBox);
         return true;
-        // return root;
     }
 
     public void createAccount(VBox root, int viewChoice) {
@@ -217,8 +211,8 @@ class ViewUI{
                 int patientID = system.newPatient(firstnameField.getText(), lastNameField.getText(), genderField.getText(), Long.parseLong(phoneField.getText()), Integer.parseInt(ageField.getText()));
 
                 root.getChildren().clear();
-                if (viewChoice == 1) NurseView.startUI(root);
-                else PatientView.startUI(root);
+                if (viewChoice == 1) NurseView.startUI(root, patientID);
+                else PatientView.startUI(root, patientID);
 			}
         });
         
@@ -227,4 +221,6 @@ class ViewUI{
         root.setPadding(new Insets(10, 10, 10, 10));
         root.getChildren().addAll(heading, firstName, lastName, genderBox, phoneBox, ageBox, accountCreate); //back);
     }
+
+
 }
