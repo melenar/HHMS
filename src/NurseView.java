@@ -41,6 +41,8 @@ class NurseView extends VBox{
         heading.setVgap(10.0);
         heading.getChildren().add(new Label("Nurse View"));
 
+        
+
         Button edit = new Button("View/Edit Info");
         edit.setPrefWidth(100);
         // edit.setTranslateY(450);

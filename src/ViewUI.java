@@ -9,6 +9,7 @@ import java.util.*;
 
 class ViewUI{
     boolean isLogged = false;
+    Admin system = new Admin();
 
     public boolean authenticate(VBox root, int viewChoice) {
         TilePane heading;
@@ -213,6 +214,8 @@ class ViewUI{
             //         fos.write(fileContent.getBytes());
             //         fos.close();
             //     } catch (IOException e1) { e1.printStackTrace(); }
+                boolean isNewPatient = system.newPatient(firstnameField.getText(), lastNameField.getText(), genderField.getText(), Long.parseLong(phoneField.getText()), Integer.parseInt(ageField.getText()));
+
                 root.getChildren().clear();
                 if (viewChoice == 1) NurseView.startUI(root);
                 else PatientView.startUI(root);

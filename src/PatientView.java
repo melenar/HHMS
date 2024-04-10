@@ -63,7 +63,7 @@ class PatientView extends VBox {
         
         edit.setOnAction(e -> {
             root.getChildren().clear();
-            root.getChildren().add(new InfoPage());
+            // root.getChildren().add(new InfoPage());
         });
         
         
@@ -75,7 +75,7 @@ class PatientView extends VBox {
         
 		logout.setOnAction(e -> {
 			root.getChildren().clear();
-			root.getChildren().add(new PatientLogin());
+			// root.getChildren().add(new PatientLogin());
 		});
         
         
