@@ -15,12 +15,22 @@ import javafx.scene.control.Alert;
 
 
 class PatientView extends VBox {
-	Button edit, logout;
-	VBox root;
-	Scanner scnr = new Scanner(System.in);
+    ViewUI view = new ViewUI();
 	
 	PatientView() {
-    	
+            this.setPadding(new Insets(10, 10, 10, 10));
+            // TilePane heading = new TilePane(Orientation.VERTICAL);
+            // heading.setPadding(new Insets(20, 20, 20, 20));
+            // heading.setAlignment(Pos.CENTER);
+            // heading.setVgap(10.0);
+            // heading.getChildren().add(new Label("Nurse View"));
+            // this.getChildren().addAll(view.authenticate(this));
+            System.out.println(view.authenticate(this, 2));
+    }
+    
+    public static void startUI(VBox root) {
+        Button edit, logout;
+        Scanner scnr = new Scanner(System.in);
     	//Heading
         TilePane heading = new TilePane(Orientation.VERTICAL);
         heading.setPadding(new Insets(20, 20, 20, 20));
@@ -52,8 +62,8 @@ class PatientView extends VBox {
         edit.setPadding(new Insets(10, 10, 10, 10));
         
         edit.setOnAction(e -> {
-            this.getChildren().clear();
-            this.getChildren().add(new InfoPage());
+            root.getChildren().clear();
+            root.getChildren().add(new InfoPage());
         });
         
         
@@ -64,8 +74,8 @@ class PatientView extends VBox {
         logout.setPadding(new Insets(10, 10, 10, 10));
         
 		logout.setOnAction(e -> {
-			this.getChildren().clear();
-			this.getChildren().add(new PatientLogin());
+			root.getChildren().clear();
+			root.getChildren().add(new PatientLogin());
 		});
         
         
@@ -73,8 +83,8 @@ class PatientView extends VBox {
         
         /**********************Engine**********************/
         //Instantiating the VBox
-        this.setPadding(new Insets(10, 10, 10, 10));
-        this.getChildren().addAll(heading, chatBox, edit, logout);
+        root.setPadding(new Insets(10, 10, 10, 10));
+        root.getChildren().addAll(heading, chatBox, edit, logout);
     }
    
 }

@@ -14,7 +14,7 @@ import javafx.event.ActionEvent;
 
 
 public class Main extends Application {
-    public static final int WIDTH = 1200, HEIGHT = 800;
+    public static final int WIDTH = 1000, HEIGHT = 650;
     Button doctor, nurse, patient;
     StackPane root;
 
@@ -74,7 +74,7 @@ public class Main extends Application {
                 // If the source is cancel or confirm button
                 if (source == patient) {
                     root.getChildren().clear();
-                    root.getChildren().addAll(new PatientLogin());
+                    root.getChildren().addAll(new PatientView());
                 } else if (source == nurse) {
                     root.getChildren().clear();
                     root.getChildren().add(new NurseView());
