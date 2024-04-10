@@ -7,7 +7,7 @@ import javafx.geometry.*;
 import java.io.*;
 import java.util.*;
 
-class ViewUI{
+class ViewUI {
     boolean isLogged = false;
     Admin system = new Admin();
 
@@ -59,25 +59,12 @@ class ViewUI{
 			    while (scnr.hasNextLine()) {
                     String line = scnr.nextLine();
 					if (id.equals(line.split(" ")[0])) {
-                        // isLogged = true;
-                        // a = new Alert(Alert.AlertType.NONE);
-                        // a.setAlertType(Alert.AlertType.INFORMATION);
-                        // a.setContentText("Login Successful!");
-                        // a.showAndWait();
-
                         //To swtich to the Nurse or Patient view after authentication
                         root.getChildren().clear();
-                        if (viewChoice == 1) NurseView.startUI(root, Integer.parseInt(id));
-                        else PatientView.startUI(root, Integer.parseInt(id));
+                        if (viewChoice == 1) NurseView.startUI(root, id);
+                        else if (viewChoice == 2) PatientView.startUI(root, id);
+                        else DoctorView.startUI(root, id);
                         break;
-                    // } else {
-                    //     a = new Alert(Alert.AlertType.NONE);
-                    //     a.setAlertType(Alert.AlertType.ERROR);
-                    //     a.setContentText("Incorrect Password");
-                    //     a.show();
-                    //     root.getChildren().clear();
-					// 		return root;
-                    //     break;
                     }
                 } scnr.close();
 			} catch (FileNotFoundException e1) { e1.printStackTrace(); }
@@ -146,13 +133,13 @@ class ViewUI{
         phoneBox.getChildren().addAll(phoneLabel, phoneField);
         
         //Date of Birth
-        HBox ageBox = new HBox();
-        Label ageLabel = new Label("Age: ");
-        TextField ageField = new TextField();
-        ageBox.setTranslateY(-105);
-        ageBox.setTranslateX(-8);
-        ageBox.setAlignment(Pos.CENTER);
-        ageBox.getChildren().addAll(ageLabel, ageField);
+        HBox dobBox = new HBox();
+        Label dobLabel = new Label("Date: ");
+        TextField dobField = new TextField();
+        dobBox.setTranslateY(-105);
+        dobBox.setTranslateX(-8);
+        dobBox.setAlignment(Pos.CENTER);
+        dobBox.getChildren().addAll(dobLabel, dobField);
 
         /**********************BUTTONS**********************/
         
@@ -164,62 +151,26 @@ class ViewUI{
         accountCreate.setTranslateX(575);
         accountCreate.setPadding(new Insets(10, 10, 10, 10));
         
-        //Back Button
-        // Button back = new Button("Back");
-        // back.setPrefWidth(75);
-        // back.setTranslateY(0);
-        // back.setAlignment(Pos.CENTER);
-        // back.setTranslateX(415);
-        // back.setPadding(new Insets(10, 10, 10, 10));
-		// back.setOnAction(e -> {
-		// 	this.getChildren().clear();
-		// 	this.getChildren().add(new PatientLogin());
-		// });
-        
         accountCreate.setOnAction(e -> {
         	//Check if fields are empty
-			if (firstnameField.getText().isEmpty() || lastNameField.getText().isEmpty() || genderField.getText().isEmpty() || phoneField.getText().isEmpty() || ageField.getText().isEmpty()) {
+			if (firstnameField.getText().isEmpty() || lastNameField.getText().isEmpty() || genderField.getText().isEmpty() || phoneField.getText().isEmpty() || dobField.getText().isEmpty()) {
 				a.setAlertType(Alert.AlertType.ERROR);
 				a.setContentText("Please fill out all fields.");
 				a.show();
 			} else {
-            //     File file = new File("src/files/patientID_patientInfo.txt");
-            //     fileContent = "\n" + usernameField.getText() + " " + passwordField.getText();
-
-            //     //check if the name already exists
-            //     try {
-            //         Scanner scnr = new Scanner(new FileInputStream(file));
-            //         while (scnr.hasNextLine()) {
-            //             String line = scnr.nextLine();
-            //             if (line.contains(userID)) {
-            //                 a.setAlertType(Alert.AlertType.ERROR);
-            //                 a.setContentText("Username already exists.");
-            //                 a.show();
-            //                 return;
-            //             }
-            //         } scnr.close();
-            //     } catch (FileNotFoundException e1) { e1.printStackTrace(); }
-                
-            //     //Write to file
-            //     try { fos = new FileOutputStream(file, true); } 
-            //     catch (FileNotFoundException e1) { e1.printStackTrace(); }
-                
-            //     try {
-            //         fos.write(fileContent.getBytes());
-            //         fos.close();
-            //     } catch (IOException e1) { e1.printStackTrace(); }
-                int patientID = system.newPatient(firstnameField.getText(), lastNameField.getText(), genderField.getText(), Long.parseLong(phoneField.getText()), Integer.parseInt(ageField.getText()));
+                String patientID = system.newPatient(firstnameField.getText(), lastNameField.getText(), genderField.getText(), Long.parseLong(phoneField.getText()), dobField.getText());
 
                 root.getChildren().clear();
                 if (viewChoice == 1) NurseView.startUI(root, patientID);
-                else PatientView.startUI(root, patientID);
+                else if (viewChoice == 2) PatientView.startUI(root, patientID);
+                else DoctorView.startUI(root, patientID);
 			}
         });
         
         /**********************Engine**********************/
         //Instantiating the VBox
         root.setPadding(new Insets(10, 10, 10, 10));
-        root.getChildren().addAll(heading, firstName, lastName, genderBox, phoneBox, ageBox, accountCreate); //back);
+        root.getChildren().addAll(heading, firstName, lastName, genderBox, phoneBox, dobBox, accountCreate); //back);
     }
 
 

@@ -2,7 +2,6 @@ import java.util.*;
 import java.io.*;
 
 public class Admin {
-
     private static void appendToFile(String filePath, String text) {
         try {
             // Create file if it doesn't exist
@@ -22,37 +21,32 @@ public class Admin {
             // Close the resources
             bw.close();
             fw.close();
-        } catch (IOException e) {
-            System.err.println("Internal Server Error");
-            System.out.println("Internal Server Error");
-        }
+        } catch (IOException e1) { e1.printStackTrace(); }
     }
 
-    private int generateID() {
-        Random rand = new Random();
-        return rand.nextInt((99999 - 10000) + 1) + 10000;
-    }
-
-    int newPatient(String firstname, String lastName, String gender, long phone, int age) {
-        int id;
-        String path = "IdRecods.txt";
-        do {
-            id = generateID();
-        } while (numberExistsInFile(path, id));
-
-        String patientId = String.valueOf(id);
-        appendToFile(path, patientId);
-
-        saveToFile(patientId + "_PatientInfo.txt", firstname, lastName, gender, phone, age);
-
+    private String generateID(String dob, String firstname, String lastName) {
+        String id = firstname.substring(0,3)+lastName.substring(0,3)+dob.substring(0,2);
         return id;
     }
 
-    private static boolean numberExistsInFile(String filePath, int number) {
+    String newPatient(String firstname, String lastName, String gender, long phone, String dob) {
+        String patientId;
+        String path = "IdRecods.txt";
+        do {
+            patientId = generateID(dob, firstname, lastName);
+        } while (numberExistsInFile(path, patientId));
+
+        appendToFile(path, patientId);
+        saveToFile(patientId + "_PatientInfo.txt", firstname, lastName, gender, phone, dob);
+
+        return patientId;
+    }
+
+    private static boolean numberExistsInFile(String filePath, String id) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.trim().equals(String.valueOf(number))) {
+                if (line.trim().equals(id)) {
                     return true; // Number found in file
                 }
             }
@@ -64,22 +58,25 @@ public class Admin {
         }
     }
 
-    private void saveToFile(String fileName, String firstname, String lastName,String gender,long phone, int age) {
+    private void saveToFile(String fileName, String firstname, String lastName,String gender,long phone, String dob) {
         try {
             FileWriter fw = new FileWriter(fileName);
             fw.write(firstname + "\n");
             fw.write(lastName + "\n");
             fw.write(gender + "\n"); 
             fw.write(phone + "\n");
-            fw.write(age + "\n");
+            fw.write(dob + "\n");
             fw.close();
-        } catch (IOException e) {
-            System.err.println("Internal Server Error");
-            System.out.println("Internal Server Error");
-        }
+        } catch (IOException e1) { e1.printStackTrace(); }
     }
 
-    void save() {
-        
+    public String loadHistory() {
+        String history = "abcd";
+
+        return history;
+    }
+
+    void saveMessage(String message, String sender, String patientId) {
+
     }
 }

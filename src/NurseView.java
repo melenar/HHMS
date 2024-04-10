@@ -8,16 +8,11 @@ import java.util.*;
 
 class NurseView extends VBox {
     ViewUI view = new ViewUI();
-    static int patientID;
+    static String patientID;
+    static Admin system = new Admin();
 
     NurseView() {
         this.setPadding(new Insets(10, 10, 10, 10));
-        // TilePane heading = new TilePane(Orientation.VERTICAL);
-        // heading.setPadding(new Insets(20, 20, 20, 20));
-        // heading.setAlignment(Pos.CENTER);
-        // heading.setVgap(10.0);
-        // heading.getChildren().add(new Label("Nurse View"));
-        // this.getChildren().addAll(view.authenticate(this));
         System.out.println(view.authenticate(this, 1));
     }
 
@@ -32,6 +27,11 @@ class NurseView extends VBox {
 
         // Button for submitting patient data
         Button submitButton = new Button("Submit");
+        submitButton.setOnAction(e -> {
+            if (!allergiesTextArea.getText().isEmpty() && !healthConcernsTextArea.getText().isEmpty()) {
+                save(allergiesTextArea.getText(), healthConcernsTextArea.getText());
+            }
+        });
 
         // ListView for nurse-patient communication
         ListView<String> communicationListView = new ListView<>();
@@ -47,6 +47,7 @@ class NurseView extends VBox {
             String message = messageTextField.getText().trim();
             if (!message.isEmpty()) {
                 communicationListView.getItems().add("Nurse: " + message); // Add nurse's message to the list view
+                system.saveMessage(message, "Nurse", patientID);
                 messageTextField.clear(); // Clear the message text field
             }
         });
@@ -76,7 +77,7 @@ class NurseView extends VBox {
         root.getChildren().addAll(grid, new Separator(), patientHistoryTableView);
     }
 
-    public static void startUI(VBox root, int id) {
+    public static void startUI(VBox root, String id) {
         patientID = id;
         //Heading
         TilePane heading = new TilePane(Orientation.VERTICAL);
@@ -151,7 +152,7 @@ class NurseView extends VBox {
     }
 
     static void saveVitals(double weight, double height, double temperature, double bloodPressure) {
-        String path = String.valueOf(patientID) + "_PatientInfo.txt";
+        String path = patientID + "_PatientInfo.txt";
         try {
             // Create file if it doesn't exist
             File file = new File(path);
@@ -176,10 +177,31 @@ class NurseView extends VBox {
             // Close the resources
             bw.close();
             fw.close();
-        } catch (IOException e) {
-            System.err.println("Internal Server Error");
-            System.out.println("Internal Server Error");
-        }
+        } catch (IOException e1) { e1.printStackTrace(); }
     }
 
+    static void save(String allergies, String healthConcerns) {
+        String path = patientID + "_PatientInfo.txt";
+        try {
+            // Create file if it doesn't exist
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            // Open file in append mode
+            FileWriter fw = new FileWriter(file, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            String text = "\nAlergies:\n" + allergies + "\nHealth Concerns:\n" + healthConcerns;
+
+            // Append text to file
+            bw.write(text);
+            bw.newLine(); // Move to the next line
+
+            // Close the resources
+            bw.close();
+            fw.close();
+        } catch (IOException e1) { e1.printStackTrace(); }
+    }
 }
