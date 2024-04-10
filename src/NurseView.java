@@ -22,7 +22,7 @@ class NurseView extends VBox {
     }
 
     public static void display(VBox root) {
-        // Labels
+        // Labels for known allergies and health concerns
         Label allergiesLabel = new Label("Known Allergies:");
         Label healthConcernsLabel = new Label("Health Concerns:");
 
@@ -33,10 +33,23 @@ class NurseView extends VBox {
         // Button for submitting patient data
         Button submitButton = new Button("Submit");
 
-        // TableView for displaying patient history
-        TableView<String> patientHistoryTableView = new TableView<>();
-        TableColumn<String, String> historyColumn = new TableColumn<>("Patient History");
-        patientHistoryTableView.getColumns().add(historyColumn);
+        // ListView for nurse-patient communication
+        ListView<String> communicationListView = new ListView<>();
+        communicationListView.setPrefHeight(100); // Set preferred height
+
+        // Text field for entering messages
+        TextField messageTextField = new TextField();
+        messageTextField.setPromptText("Enter your message...");
+
+        // Button for sending messages
+        Button sendButton = new Button("Send");
+        sendButton.setOnAction(e -> {
+            String message = messageTextField.getText().trim();
+            if (!message.isEmpty()) {
+                communicationListView.getItems().add("Nurse: " + message); // Add nurse's message to the list view
+                messageTextField.clear(); // Clear the message text field
+            }
+        });
 
         // Layout setup
         GridPane grid = new GridPane();
@@ -50,6 +63,15 @@ class NurseView extends VBox {
         grid.add(healthConcernsLabel, 0, 1);
         grid.add(healthConcernsTextArea, 1, 1);
         grid.add(submitButton, 1, 2);
+
+        // Communication section
+        VBox communicationBox = new VBox(5, new Label("Communication"), communicationListView, new HBox(messageTextField, sendButton));
+        grid.add(communicationBox, 2, 0, 1, 3);
+
+        // TableView for displaying patient history
+        TableView<String> patientHistoryTableView = new TableView<>();
+        TableColumn<String, String> historyColumn = new TableColumn<>("Patient History");
+        patientHistoryTableView.getColumns().add(historyColumn);
 
         root.getChildren().addAll(grid, new Separator(), patientHistoryTableView);
     }
