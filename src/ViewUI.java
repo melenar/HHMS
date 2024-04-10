@@ -214,7 +214,7 @@ class ViewUI{
             //         fos.write(fileContent.getBytes());
             //         fos.close();
             //     } catch (IOException e1) { e1.printStackTrace(); }
-                boolean isNewPatient = system.newPatient(firstnameField.getText(), lastNameField.getText(), genderField.getText(), Long.parseLong(phoneField.getText()), Integer.parseInt(ageField.getText()));
+                int patientID = system.newPatient(firstnameField.getText(), lastNameField.getText(), genderField.getText(), Long.parseLong(phoneField.getText()), Integer.parseInt(ageField.getText()));
 
                 root.getChildren().clear();
                 if (viewChoice == 1) NurseView.startUI(root);
