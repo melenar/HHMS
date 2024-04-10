@@ -31,7 +31,7 @@ public class Admin {
 
     String newPatient(String firstname, String lastName, String gender, long phone, String dob) {
         String patientId;
-        String path = "IdRecods.txt";
+        String path = "files/IdRecords.txt";
         do {
             patientId = generateID(dob, firstname, lastName);
         } while (numberExistsInFile(path, patientId));
@@ -47,15 +47,11 @@ public class Admin {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.trim().equals(id)) {
-                    return true; // Number found in file
+                    return true; // id found in file
                 }
             }
-            return false; // Number not found in file
-        } catch (IOException e) {
-            System.err.println("Internal Server Error");
-            System.out.println("Internal Server Error");
-            return false; // Assume number doesn't exist in case of an error
-        }
+        } catch (IOException e1) { e1.printStackTrace(); }
+        return false; // id not found in file
     }
 
     private void saveToFile(String fileName, String firstname, String lastName,String gender,long phone, String dob) {
@@ -70,13 +66,45 @@ public class Admin {
         } catch (IOException e1) { e1.printStackTrace(); }
     }
 
-    public String loadHistory() {
-        String history = "abcd";
+    public String loadHistory(String patientId) {
+        String path = "file/"+ patientId + "_PatientInfo.txt";
 
-        return history;
+        return path;
     }
 
     void saveMessage(String message, String sender, String patientId) {
+        String path = patientId + "_messages.txt";
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (IOException e1) { e1.printStackTrace(); }
+        
+        try (FileWriter writer = new FileWriter(path, true)) {
+            // Append the message to the file
+            writer.write("["+(new Date())+"]"+sender + ":\n" + message + "\n");
+        } catch (IOException e1) { e1.printStackTrace(); }
+    }
 
+    String loadMessages(String patientId) {
+        String path = patientId + "_messages.txt";
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (IOException e1) { e1.printStackTrace(); }
+
+        StringBuilder messages = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                messages.append(line).append("\n"); // Append each line to the messages StringBuilder
+            }
+        } catch (IOException e1) { e1.printStackTrace(); }
+
+        return messages.toString();
     }
 }

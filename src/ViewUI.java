@@ -55,7 +55,7 @@ class ViewUI {
 		login.setOnAction(e -> {
 			String id = patientIdField.getText();
 			try {
-			Scanner scnr = new Scanner(new File("files/patientID_patientInfo.txt"));
+			Scanner scnr = new Scanner(new File("files/IdRecords.txt"));
 			    while (scnr.hasNextLine()) {
                     String line = scnr.nextLine();
 					if (id.equals(line.split(" ")[0])) {

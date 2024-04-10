@@ -39,7 +39,9 @@ class PatientView extends VBox {
         Label visitSummaryLabel = new Label("Visit Summary:");
 
         // ListView for nurse-patient communication
+        String messages = system.loadMessages(patientID);
         ListView<String> communicationListView = new ListView<>();
+        communicationListView.getItems().add(messages);
         communicationListView.setPrefHeight(100); // Set preferred height
 
         // Text field for entering messages

@@ -51,8 +51,10 @@ class DoctorView extends VBox {
             }
         });
 
-        // ListView for patient-doctor communication
+        // ListView for nurse-patient communication
+        String messages = system.loadMessages(patientID);
         ListView<String> communicationListView = new ListView<>();
+        communicationListView.getItems().add(messages);
         communicationListView.setPrefHeight(100); // Set preferred height
 
         // Text field for entering messages
