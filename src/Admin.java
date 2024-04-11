@@ -58,8 +58,7 @@ public class Admin {
         try {
             FileWriter fw = new FileWriter(fileName);
             fw.write(id + "\n");
-            fw.write(firstname + "\n");
-            fw.write(lastName + "\n");
+            fw.write(firstname + " " + lastName + "\n");
             fw.write(gender + "\n"); 
             fw.write(phone + "\n");
             fw.write(dob + "\n");
@@ -132,4 +131,25 @@ public class Admin {
 
         return messages.toString();
     }
+    
+    @SuppressWarnings("resource")
+	public static String getPatientName(String patientId) {
+        String path = patientId + "_PatientInfo.txt";
+        String name = "";
+        BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(path));
+	        reader.readLine(); // Skip the patient ID
+             name = ((String)reader.readLine()); // Return the patient name
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return name;
+        
 }
+    }
+
