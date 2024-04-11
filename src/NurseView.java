@@ -4,7 +4,15 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -28,9 +36,12 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.control.ScrollBar;
 
 class NurseView extends VBox {
+	static String pID = "";
+	static TilePane heading;
+	
     NurseView() {
     	System.out.print("Switched to Nurse View!");
-        TilePane heading = new TilePane(Orientation.VERTICAL);
+    	heading = new TilePane(Orientation.VERTICAL);
         heading.setPadding(new Insets(20, 20, 20, 20));
         heading.setAlignment(Pos.CENTER);
         heading.setVgap(10.0);
@@ -39,6 +50,10 @@ class NurseView extends VBox {
         
         this.setPadding(new Insets(10, 10, 10, 10));
         this.getChildren().addAll(heading);
+        
+        
+        
+        
         HBox mainContainer = new HBox();
         
         createScrollBar(heading, mainContainer);
@@ -53,12 +68,15 @@ class NurseView extends VBox {
         mainContainer.getChildren().add(menuHolder);
         heading.getChildren().add(mainContainer);
         
+        
+        
     }
 
 //needs search bar above scrollbar
     
     
 public static void createScrollBar(TilePane scene, HBox mc) {
+	
 	//Scroll though list of names
 	//names will just be Buttons that load file
 	
@@ -80,17 +98,10 @@ public static void createScrollBar(TilePane scene, HBox mc) {
 	container.getChildren().add(search);
 	
 	ScrollPane s1 = new ScrollPane();
+		
 	
-	Rectangle rect1 = new Rectangle(200,200, Color.BLACK);
-	Rectangle rect2 = new Rectangle(200,200, Color.WHITE);
-	Rectangle rect3 = new Rectangle(200,200, Color.BLACK);
-	Rectangle rect4 = new Rectangle(200,200, Color.WHITE);
 	
-	nameList.getChildren().add(rect1);
-	nameList.getChildren().add(rect2);
-	nameList.getChildren().add(rect3);
-	nameList.getChildren().add(rect4);
-	
+	loadSearch(nameList);
 	//s1.setTranslateX((-Main.WIDTH + 150)/2);
 	s1.setPrefSize(300, Main.HEIGHT);
 	//s1.setMaxSize(300, Main.HEIGHT);
@@ -110,20 +121,66 @@ public static void createScrollBar(TilePane scene, HBox mc) {
 	
 }
 
+public static void loadSearch(VBox nl) {
+
+	//Loops through name file and creates a button for each patient
+	//pn & id will be loaded with patient name
+	
+	String path = "PatientList.txt";
+	
+	
+	try (BufferedReader reader = new BufferedReader(new FileReader(path))) { 
+		String line;
+	    while ((line = reader.readLine()) != null) {
+	        String[] parts = line.split(" ");
+
+	        String name = parts[0] + " " + parts[1];
+	        String id = parts[2];
+	        
+	        // Do something with the extracted data
+	        
+	        Button patient = new Button(name);
+	    	patient.setPrefWidth(300);
+	    	
+	    	patient.setOnAction(event -> {
+	    		//Will set global var to patient ID
+	    		pID = id;
+	    		System.out.print(pID);
+	    		heading.getChildren().clear();
+	    		heading.getChildren().add(new NurseView());
+	    	});
+	    	
+	    	nl.getChildren().add(patient);
+	    }
+    } catch (IOException e1) { e1.printStackTrace(); }
+
+	
+	
+	
+	
+	
+}
+
+
 public static void drawPatientInfo(TilePane scene, VBox h) {
+	
 	//fix layout to match sizes
 	HBox patientInfo = new HBox();
-//	Image image = new Image("NurseJoyTempImage.png");
-//	ImageView imageView = new ImageView(image);
-//	imageView.setFitWidth(200);
-//	imageView.setPreserveRatio(true);
-	Rectangle imageView = new Rectangle(200,200, Color.BLACK);
+	Image image = new Image("tempPFP.jpg");
+	ImageView imageView = new ImageView(image);
+	imageView.setFitWidth(200);
+	imageView.setPreserveRatio(true);
+	//Rectangle imageView = new Rectangle(200,200, Color.BLACK);
+	
 	
 	
 	Label pInfo = new Label();
 	pInfo.setLineSpacing(10);
-	String name = "Joy";
-	pInfo.setText("Name: " + name + "\n Sex: \n DOB \n Age: ");
+	String name = loadPatientInfo("Name");
+	String sex = loadPatientInfo("Sex");
+	String DOB = loadPatientInfo("DOB");
+	String age = loadPatientInfo("Age");
+	pInfo.setText("Name: " + name + "\n Sex: " + sex + "\n DOB " + DOB + "\n Age: " + age);
 	pInfo.setPrefWidth(200);
 	
 	BorderPane borderPane = new BorderPane();
@@ -140,10 +197,40 @@ public static void drawPatientInfo(TilePane scene, VBox h) {
 	//patientInfo.setTranslateY((-Main.HEIGHT + 200)/2);
 	patientInfo.setPrefHeight(200);
 	h.getChildren().add(patientInfo);
-	System.out.print("Drawing Patient Info?");
+	//System.out.print("Drawing Patient Info?");
 	
 }
 
+public static String loadPatientInfo(String search) 
+	
+	{
+		String path = pID + "_patientInfo.txt";
+		String out = "";
+		
+		try (BufferedReader reader = new BufferedReader(new FileReader(path))) { 
+			
+		    String data = reader.readLine();
+	        int index = data.indexOf(search);
+	       
+	        
+	        while (index == -1) {
+	        data = reader.readLine(); 
+	        index = data.indexOf(search);}
+	        
+	        if (index != -1) {
+	            out = data.substring(index + search.length()).trim();
+	            //System.out.println(data);
+	        }
+	        
+	    } catch (IOException e1) { e1.printStackTrace(); }
+		return out;
+
+		
+		
+		
+		
+		
+	}
 public static void drawVisitMenu(TilePane scene, VBox h) {
 	//fix layout to match sizes
 	
@@ -153,7 +240,7 @@ public static void drawVisitMenu(TilePane scene, VBox h) {
 		
 		Label pVisit = new Label();
 		pVisit.setLineSpacing(10);
-		String vList = "v1 \nv2 \nv3 \n";
+		String vList = loadPatientInfo("PV");
 		pVisit.setText("Previous Visits: \n" + vList);
 		pVisit.setPrefWidth(200);
 		
@@ -220,7 +307,7 @@ public static void vitalsScreenHandler (TilePane scene) {
 public static void patientInfo (HBox c) {
 	//image
 	//info
-	//visit infoßß
+	//visit info
 	//finish button
 	Button nextB = new Button("Finish!");
 //	nextB.setOnAction(event -> {
@@ -229,19 +316,21 @@ public static void patientInfo (HBox c) {
 //	});
 	
 	VBox container = new VBox();
+
+	Image image = new Image("tempPFP.jpg");
+	ImageView imageView = new ImageView(image);
+	imageView.setFitWidth(200);
+	imageView.setPreserveRatio(true);
 	
-//	Image image = new Image("NurseJoyTempImage.png");
-//	ImageView imageView = new ImageView(image);
-//	imageView.setFitWidth(200);
-//	imageView.setPreserveRatio(true);
-	
-	Rectangle imageView = new Rectangle(200,200, Color.BLACK);
 	container.getChildren().add(imageView);
 	
 	Label pInfo = new Label();
 	pInfo.setLineSpacing(10);
-	String name = "Joy";
-	pInfo.setText("Name: " + name + "\n Sex: \n DOB \n Age: ");
+	String name = loadPatientInfo("Name");
+	String sex = loadPatientInfo("Sex");
+	String DOB = loadPatientInfo("DOB");
+	String age = loadPatientInfo("Age");
+	pInfo.setText("Name: " + name + "\n Sex: " + sex + "\n DOB " + DOB + "\n Age: " + age);
 	pInfo.setPrefWidth(200);
 	
 	container.getChildren().add(pInfo);
@@ -277,8 +366,8 @@ public static void patientVitals (HBox c) {
 	
 
 	
-	bigTextBox("Allergies: ", textBoxes);
-	bigTextBox("Health Concerns: ", textBoxes);
+	bigTextBox("Allergies: ", textBoxes, "Allergies");
+	bigTextBox("Health Concerns: ", textBoxes, "HC");
 	
 	container.getChildren().addAll(labels, textBoxes);
 	c.getChildren().add(container);
@@ -291,16 +380,17 @@ public static void textBox (String s, VBox lb, VBox tb) {
 	TextField t = new TextField();
 	t.setPrefWidth(100);
 	
-	
-	
 	lb.getChildren().add(l);
 	tb.getChildren().add(t);
 }
-public static void bigTextBox(String s, VBox tb) {
+public static void bigTextBox(String s, VBox tb, String search) {
 	Label l = new Label(s);
 	TextArea textArea = new TextArea();
 	textArea.setWrapText(true);
 	textArea.setPrefSize(200, 100);
+	
+	textArea.setText(loadPatientInfo(search));
+	
 	tb.getChildren().addAll(l,textArea);
 	
 }
@@ -310,9 +400,9 @@ public static void patientHistory (HBox c) {
 //Immunization
 
 	VBox textBoxes = new VBox();
-	bigTextBox("Patient History: ", textBoxes);
-	bigTextBox("Previous Prescribed Medication: ", textBoxes);
-	bigTextBox("Immunization History: ", textBoxes);
+	bigTextBox("Patient History: ", textBoxes, "PH");
+	bigTextBox("Previous Prescribed Medication: ", textBoxes, "PM");
+	bigTextBox("Immunization History: ", textBoxes, "IH");
 	
 	c.getChildren().add(textBoxes); 
 }
