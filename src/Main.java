@@ -26,17 +26,17 @@ public class Main extends Application {
     public void start(Stage stage) {
         root = new StackPane();
         root.setPadding(new Insets(40, 40, 40, 40));
-        String buttonStyle = "-fx-background-color: #0000FF; " +  // Blue background
+        String buttonStyle = "-fx-background-color: #74c5d4; " +  // Blue background
                             "-fx-text-fill: #000000; " +            // Black text color
                             "-fx-border-color: #000000; " +         // Black border color
-                            "-fx-padding: 0.5cm;" +                 // Padding between text and border
+                            "-fx-padding: 0.75cm;" +                 // Padding between text and border
                             "-fx-font-weight: bold;";              // Bold text
 
         TilePane box = new TilePane(Orientation.VERTICAL);
         box.setPadding(new Insets(20, 20, 20, 20));
         box.setAlignment(Pos.CENTER);
         box.setVgap(10.0);
-        box.setStyle("-fx-border-color: blue; " +  // Blue border color
+        box.setStyle("-fx-border-color: #4dbdd1; " +  // Blue border color
                     "-fx-border-width: 2px;");     // Border width
         
         patient = new Button("Patient Login");
@@ -57,7 +57,12 @@ public class Main extends Application {
         doctor.setPadding(new Insets(20, 20, 20, 20));
         doctor.setStyle(buttonStyle);
 
-        box.getChildren().addAll(new Label("Welcome to ________ Pediatric Doctor’s Office"), patient, nurse, doctor);
+        Label welcomeLabel = new Label("Welcome to ________ Pediatric Doctor’s Office");
+        welcomeLabel.setStyle("-fx-font-size: 24px; " +
+        					  "-fx-font-weight: bold;" +
+        		              "-fx-padding: 0 0 40 0;");
+
+        box.getChildren().addAll(welcomeLabel, patient, nurse, doctor);
         root.getChildren().add(box);
 
         Scene scene = new Scene(root, WIDTH, HEIGHT);
