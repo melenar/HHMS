@@ -30,18 +30,19 @@ public class Admin {
     }
 
     String newPatient(String firstname, String lastName, String gender, long phone, String dob) {
-        String patientId = generateID(dob, firstname, lastName);;
-        String path = patientId + "_PatientInfo.txt";
+        String patientId;
+        String path = "files/IdRecords.txt";
         do {
-            //patientId = generateID(dob, firstname, lastName);
+            patientId = generateID(dob, firstname, lastName);
         } while (numberExistsInFile(path, patientId));
+
         appendToFile(path, patientId);
-        saveToFile(patientId + "_PatientInfo.txt", patientId, firstname, lastName, gender, phone, dob);
+        saveToFile(patientId + "_PatientInfo.txt", firstname, lastName, gender, phone, dob);
 
         return patientId;
     }
 
-    static boolean numberExistsInFile(String filePath, String id) {
+    private static boolean numberExistsInFile(String filePath, String id) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -53,11 +54,11 @@ public class Admin {
         return false; // id not found in file
     }
 
-    private void saveToFile(String fileName, String id, String firstname, String lastName,String gender,long phone, String dob) {
+    private void saveToFile(String fileName, String firstname, String lastName,String gender,long phone, String dob) {
         try {
             FileWriter fw = new FileWriter(fileName);
-            fw.write(id + "\n");
-            fw.write(firstname + " " + lastName + "\n");
+            fw.write(firstname + "\n");
+            fw.write(lastName + "\n");
             fw.write(gender + "\n"); 
             fw.write(phone + "\n");
             fw.write(dob + "\n");
@@ -130,29 +131,4 @@ public class Admin {
 
         return messages.toString();
     }
-    
-    public static String getPatientName(String patientId) {
-        String path = patientId + "_PatientInfo.txt";
-        String name = "";
-        BufferedReader reader;
-		try {
-			reader = new BufferedReader(new FileReader(path));
-	        reader.readLine(); // Skip the patient ID
-             name = ((String)reader.readLine()); // Return the patient name
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return name;    
 }
-
-
-
-
-}
-    
-
-

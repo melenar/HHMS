@@ -16,13 +16,12 @@ class PatientView extends VBox {
             this.setPadding(new Insets(10, 10, 10, 10));
             System.out.println(view.authenticate(this, 2));
     }
-     
+    
     public static void startUI(VBox root, String id) {    
         patientID = id;    
         // Labels for patient contact information
         Label nameLabel = new Label("Name:");
         Label phoneLabel = new Label("Phone Number:");
-        Label name = new Label(Admin.getPatientName(patientID));;
 
         // Text fields for displaying and editing patient contact information
         TextField phoneTextField = new TextField();
@@ -74,7 +73,6 @@ class PatientView extends VBox {
 
         // Adding components to the layout
         grid.add(nameLabel, 0, 0);
-        grid.add(name, 1, 0);
         // grid.add(phoneTextField, 1, 0);
         grid.add(phoneLabel, 0, 1);
         grid.add(phoneTextField, 1, 1);

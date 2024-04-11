@@ -60,7 +60,7 @@ class DoctorView extends VBox {
         // Text field for entering messages
         TextField messageTextField = new TextField();
         messageTextField.setPromptText("Enter your message...");
- 
+
         // Button for sending messages
         Button sendButton = new Button("Send");
         sendButton.setOnAction(e -> {
