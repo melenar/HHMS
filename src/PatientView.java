@@ -16,7 +16,7 @@ class PatientView extends VBox {
             this.setPadding(new Insets(10, 10, 10, 10));
             System.out.println(view.authenticate(this, 2));
     }
-    
+     
     public static void startUI(VBox root, String id) {    
         patientID = id;    
         // Labels for patient contact information

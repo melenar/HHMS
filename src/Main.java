@@ -12,9 +12,9 @@ import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 
-
+ 
 public class Main extends Application {
-    public static final int WIDTH = 1000, HEIGHT = 650;
+    public static final int WIDTH = 1000, HEIGHT = 650; // Window size	
     Button doctor, nurse, patient;
     StackPane root;
 

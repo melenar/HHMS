@@ -37,7 +37,7 @@ public class Admin {
         } while (numberExistsInFile(path, patientId));
 
         appendToFile(path, patientId);
-        saveToFile(patientId + "_PatientInfo.txt", firstname, lastName, gender, phone, dob);
+        saveToFile(patientId + "_PatientInfo.txt", patientId, firstname, lastName, gender, phone, dob);
 
         return patientId;
     }
@@ -54,9 +54,10 @@ public class Admin {
         return false; // id not found in file
     }
 
-    private void saveToFile(String fileName, String firstname, String lastName,String gender,long phone, String dob) {
+    private void saveToFile(String fileName, String id, String firstname, String lastName,String gender,long phone, String dob) {
         try {
             FileWriter fw = new FileWriter(fileName);
+            fw.write(id + "\n");
             fw.write(firstname + "\n");
             fw.write(lastName + "\n");
             fw.write(gender + "\n"); 

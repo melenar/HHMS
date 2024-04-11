@@ -363,7 +363,7 @@ public static void patientHistory (HBox c) {
 //        // ListView for nurse-patient communication
 //        ListView<String> communicationListView = new ListView<>();
 //        communicationListView.setPrefHeight(100); // Set preferred height
-//
+// 
 //        // Text field for entering messages
 //        TextField messageTextField = new TextField();
 //        messageTextField.setPromptText("Enter your message...");

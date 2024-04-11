@@ -59,10 +59,10 @@ class ViewUI {
 		login.setOnAction(e -> {
 			String id = patientIdField.getText();
 			try {
-			Scanner scnr = new Scanner(new File("files/IdRecords.txt"));
+			Scanner scnr = new Scanner(new File(id + "_PatientInfo.txt"));
 			    while (scnr.hasNextLine()) {
                     String line = scnr.nextLine();
-					if (id.equals(line.split(" ")[0])) {
+					if (id.equals(line.split(" ")[0])){
                         //To swtich to the Nurse or Patient view after authentication
                         root.getChildren().clear();
                         if (viewChoice == 1) System.out.print("switching to nurse"); //NurseView.startUI(root, patientID);
@@ -94,7 +94,7 @@ class ViewUI {
 
     public void createAccount(VBox root, int viewChoice) {
         Button accountCreate;
-        String userID, userPass, firstSub, lastSub, dobSub, fileContent;
+        //String userID, userPass, firstSub, lastSub, dobSub, fileContent;
 		Alert a = new Alert(Alert.AlertType.NONE);
 
         //Heading
