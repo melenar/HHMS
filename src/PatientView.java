@@ -22,8 +22,7 @@ class PatientView extends VBox {
         // Labels for patient contact information
         Label nameLabel = new Label("Name:");
         Label phoneLabel = new Label("Phone Number:");
-        Label name;
-        name = new Label(Admin.getPatientName(patientID));
+        Label name = new Label(Admin.getPatientName(patientID));;
 
         // Text fields for displaying and editing patient contact information
         TextField phoneTextField = new TextField();

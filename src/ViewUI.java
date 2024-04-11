@@ -63,6 +63,17 @@ class ViewUI {
 		login.setOnAction(e -> {
 			String id = patientIdField.getText();
 			try {
+				if (id.isEmpty()) {
+					Alert a = new Alert(Alert.AlertType.ERROR);
+					a.setContentText("Please enter a valid ID");
+					a.show();
+					return;
+				} else if (!Admin.numberExistsInFile(id + "_PatientInfo.txt", id)) {
+					Alert a = new Alert(Alert.AlertType.ERROR);
+					a.setContentText("Invalid ID. Please try again.");
+					a.show();
+					return;
+				}
 			Scanner scnr = new Scanner(new File(id + "_PatientInfo.txt"));
 			    while (scnr.hasNextLine()) {
                     String line = scnr.nextLine();
@@ -73,7 +84,7 @@ class ViewUI {
                         else if (viewChoice == 2) PatientView.startUI(root, id);
                         else DoctorView.startUI(root, id);
                         break;
-                    }
+					}
                 } scnr.close();
 			} catch (FileNotFoundException e1) { e1.printStackTrace(); }
 		});
@@ -116,14 +127,14 @@ class ViewUI {
         Label first = new Label("First Name: ");
         TextField firstnameField = new TextField();
         firstName.setAlignment(Pos.CENTER);
-        firstName.setTranslateY(-165);
+        firstName.setTranslateY(-80);
         firstName.getChildren().addAll(first, firstnameField);
         
         //Last Name
         HBox lastName = new HBox();
         Label lastNameLabel = new Label("Last Name: ");
         TextField lastNameField = new TextField();
-        lastName.setTranslateY(-150);
+        lastName.setTranslateY(-60);
         lastName.setAlignment(Pos.CENTER);
         lastName.getChildren().addAll(lastNameLabel, lastNameField);
         
@@ -131,7 +142,7 @@ class ViewUI {
         HBox genderBox = new HBox();
         Label gender = new Label("Gender: ");
         TextField genderField = new TextField();
-        genderBox.setTranslateY(-135);
+        genderBox.setTranslateY(-40);
         genderBox.setTranslateX(10);
         genderBox.setAlignment(Pos.CENTER);
         genderBox.getChildren().addAll(gender, genderField);
@@ -140,16 +151,16 @@ class ViewUI {
         HBox phoneBox = new HBox();
         Label phoneLabel = new Label("Phone Number: ");
         TextField phoneField = new TextField();
-        phoneBox.setTranslateY(-120);
-        phoneBox.setTranslateX(-13);
+        phoneBox.setTranslateY(-20);
+        phoneBox.setTranslateX(-10);
         phoneBox.setAlignment(Pos.CENTER);
         phoneBox.getChildren().addAll(phoneLabel, phoneField);
         //Date of Birth
         HBox dobBox = new HBox();
-        Label dobLabel = new Label("Date: ");
+        Label dobLabel = new Label("Birth Date: ");
         TextField dobField = new TextField();
-        dobBox.setTranslateY(-105);
-        dobBox.setTranslateX(-8);
+        dobBox.setTranslateY(-0);
+        dobBox.setTranslateX(3);
         dobBox.setAlignment(Pos.CENTER);
         dobBox.getChildren().addAll(dobLabel, dobField);
 
@@ -171,6 +182,9 @@ class ViewUI {
 				a.show();
 			} else {
                 String patientID = system.newPatient(firstnameField.getText(), lastNameField.getText(), genderField.getText(), Long.parseLong(phoneField.getText()), dobField.getText());
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText("Account created successfully! Your patient ID is " + patientID);
+                a.showAndWait();
 
                 root.getChildren().clear();
                 if (viewChoice == 1) System.out.print("switching to nurse"); //NurseView.startUI(root, patientID);
