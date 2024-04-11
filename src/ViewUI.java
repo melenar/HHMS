@@ -36,6 +36,10 @@ class ViewUI {
         Label patientId = new Label("Patient ID: ");
 	patientId.setStyle("-fx-font-weight: bold;");
         TextField patientIdField = new TextField();
+        
+        patientId.setTranslateY(50);
+        patientIdField.setAlignment(Pos.CENTER);
+        patientIdField.setTranslateY(50);
 
         HBox authBox = new HBox();
         authBox.setAlignment(Pos.CENTER);
@@ -140,7 +144,6 @@ class ViewUI {
         phoneBox.setTranslateX(-13);
         phoneBox.setAlignment(Pos.CENTER);
         phoneBox.getChildren().addAll(phoneLabel, phoneField);
-        
         //Date of Birth
         HBox dobBox = new HBox();
         Label dobLabel = new Label("Date: ");
