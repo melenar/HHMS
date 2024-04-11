@@ -21,7 +21,14 @@ class ViewUI {
         heading.setAlignment(Pos.CENTER);
         heading.setTranslateY(-65);
         heading.setVgap(10.0);
-        heading.getChildren().add(new Label("Patient Login"));
+
+	//create a new label with Patient Login
+        Label patientLoginTitle = new Label("Patient Login");
+        patientLoginTitle.setStyle("-fx-font-size: 24px; " +
+        			  "-fx-font-weight: bold;");
+        
+        //add label to heading tilePane
+        heading.getChildren().add(patientLoginTitle);
 
         /**********************Text Boxes**********************/
         
