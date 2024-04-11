@@ -61,7 +61,7 @@ class ViewUI {
 					if (id.equals(line.split(" ")[0])) {
                         //To swtich to the Nurse or Patient view after authentication
                         root.getChildren().clear();
-                        if (viewChoice == 1) NurseView.startUI(root, id);
+                        if (viewChoice == 1) System.out.print("switching to nurse"); //NurseView.startUI(root, patientID);
                         else if (viewChoice == 2) PatientView.startUI(root, id);
                         else DoctorView.startUI(root, id);
                         break;
@@ -161,7 +161,7 @@ class ViewUI {
                 String patientID = system.newPatient(firstnameField.getText(), lastNameField.getText(), genderField.getText(), Long.parseLong(phoneField.getText()), dobField.getText());
 
                 root.getChildren().clear();
-                if (viewChoice == 1) NurseView.startUI(root, patientID);
+                if (viewChoice == 1) System.out.print("switching to nurse"); //NurseView.startUI(root, patientID);
                 else if (viewChoice == 2) PatientView.startUI(root, patientID);
                 else DoctorView.startUI(root, patientID);
 			}
