@@ -63,6 +63,17 @@ class ViewUI {
 		login.setOnAction(e -> {
 			String id = patientIdField.getText();
 			try {
+				if (id.isEmpty()) {
+					Alert a = new Alert(Alert.AlertType.ERROR);
+					a.setContentText("Please enter your ID.");
+					a.show();
+					return;
+				} else if (!Admin.numberExistsInFile("files/IdRecords.txt", id)) {
+					Alert a = new Alert(Alert.AlertType.ERROR);
+					a.setContentText("Invalid ID.");
+					a.show();
+					return;
+				}
 			Scanner scnr = new Scanner(new File("files/IdRecords.txt"));
 			    while (scnr.hasNextLine()) {
                     String line = scnr.nextLine();
