@@ -21,7 +21,9 @@ class PatientView extends VBox {
         patientID = id;    
         // Labels for patient contact information
         Label nameLabel = new Label("Name:");
+        Label name = new Label(Admin.getPatientName(patientID));
         Label phoneLabel = new Label("Phone Number:");
+        Label phone = new Label(Admin.getPatientPhone(patientID));
 
         // Text fields for displaying and editing patient contact information
         TextField phoneTextField = new TextField();
@@ -73,9 +75,10 @@ class PatientView extends VBox {
 
         // Adding components to the layout
         grid.add(nameLabel, 0, 0);
+        grid.add(name, 1, 0);
         // grid.add(phoneTextField, 1, 0);
         grid.add(phoneLabel, 0, 1);
-        grid.add(phoneTextField, 1, 1);
+        grid.add(phone, 1, 1);
         grid.add(insuranceLabel, 0, 2);
         grid.add(insuranceInfoLabel, 1, 2);
         grid.add(pharmacyLabel, 0, 3);

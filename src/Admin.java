@@ -42,7 +42,7 @@ public class Admin {
         return patientId;
     }
 
-    private static boolean numberExistsInFile(String filePath, String id) {
+    static boolean numberExistsInFile(String filePath, String id) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -131,4 +131,43 @@ public class Admin {
 
         return messages.toString();
     }
+    
+    public static String getPatientName(String patientId) {
+        String path = patientId + "_PatientInfo.txt";
+        String name = "";
+        BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(path));
+             name = ((String)reader.readLine() + " " + reader.readLine()); // Return the patient name
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return name;    
+}
+    
+    public static String getPatientPhone(String patientId) {
+    	String path = patientId + "_PatientInfo.txt";
+        String phone = "0";
+        BufferedReader reader;
+        try {
+        	reader = new BufferedReader (new FileReader(path));
+                	
+        	reader.readLine();
+        	reader.readLine(); // Skip the patient name
+        	reader.readLine(); //
+        	
+        	try {
+            	phone = reader.readLine(); // Return the patient phone number
+            } catch (NumberFormatException e) { e.printStackTrace(); } 
+              catch (IOException e) { e.printStackTrace(); }
+        	
+        } catch (IOException e) { e.printStackTrace(); } // Skip the patient ID
+
+        
+return phone;
+}
 }
