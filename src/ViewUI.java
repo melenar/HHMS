@@ -34,6 +34,7 @@ class ViewUI {
         
         //Patient ID
         Label patientId = new Label("Patient ID: ");
+	patientId.setStyle("-fx-font-weight: bold;");
         TextField patientIdField = new TextField();
 
         HBox authBox = new HBox();
@@ -46,17 +47,13 @@ class ViewUI {
         //Login
         login = new Button("Login");
         login.setPrefWidth(75);
-        login.setTranslateY(72);
         login.setAlignment(Pos.CENTER);
-        login.setTranslateX(725);
         login.setPadding(new Insets(10, 10, 10, 10)); 
 
         //Create Account
         accountCreate = new Button("Create Account");
         accountCreate.setPrefWidth(150);
         accountCreate.setAlignment(Pos.CENTER);
-        accountCreate.setTranslateY(35);
-        accountCreate.setTranslateX(400);
         accountCreate.setPadding(new Insets(10, 10, 10, 10));
         
 		login.setOnAction(e -> {
@@ -76,17 +73,22 @@ class ViewUI {
                 } scnr.close();
 			} catch (FileNotFoundException e1) { e1.printStackTrace(); }
 		});
+	    
         
         accountCreate.setOnAction(e -> {
             root.getChildren().clear();
             createAccount(root, viewChoice);
         });
-        
+
+	//create a hBox for the buttons
+        HBox buttonsBox = new HBox(20);
+        buttonsBox.setAlignment(Pos.CENTER);
+        buttonsBox.getChildren().addAll(accountCreate, login);
         
         /**********************Engine**********************/                
         //Instantiating the VBox
         root.setPadding(new Insets(10, 10, 10, 10));
-        root.getChildren().addAll(heading, login, accountCreate, authBox);
+        root.getChildren().addAll(heading, authBox, buttonsBox);
         return true;
     }
 
