@@ -24,6 +24,7 @@ class DoctorView extends VBox {
 
         // Labels for patient details
         Label nameLabel = new Label("Name:");
+        Label name = new Label(Admin.getPatientName(patientID));
         Label ageLabel = new Label("Age:");
         Label genderLabel = new Label("Gender:");
         Label immunizationLabel = new Label("Immunization:");
@@ -83,7 +84,7 @@ class DoctorView extends VBox {
 
         // Patient details
         grid.add(nameLabel, 0, 1);
-        grid.add(nameValueLabel, 1, 1);
+        grid.add(name, 1, 1);
         grid.add(ageLabel, 0, 2);
         grid.add(ageValueLabel, 1, 2);
         grid.add(genderLabel, 0, 3);
